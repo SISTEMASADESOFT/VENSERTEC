@@ -218,11 +218,23 @@
                     border="0" CellPadding="0" CellSpacing="1" CssClass="GridView" GridLines="None"
                     Width="1017px">
                     <Columns>
+
+
                         <asp:TemplateField HeaderText="" ItemStyle-HorizontalAlign="Center">
+
+                           <HeaderTemplate>
+                              <asp:CheckBox ID="checkAll" runat="server" onclick="checkAll(this);" />
+                          </HeaderTemplate>
+
                             <ItemTemplate>
                                 <asp:CheckBox runat="server" ID="chkEliminar" CssClass="chkDelete" Text="" />
                             </ItemTemplate>
+
+
                         </asp:TemplateField>
+
+
+
                         <asp:TemplateField>
                             <ItemTemplate>
                                 <asp:ImageButton runat="server" ID="imgEditarRegistro" ImageUrl="~/Asset/images/btnEdit.gif"

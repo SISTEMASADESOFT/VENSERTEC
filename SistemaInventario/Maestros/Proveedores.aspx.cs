@@ -1290,6 +1290,7 @@ namespace SistemaInventario.Maestros
             dta_consultaarticulo.Columns.Add("DeudaCredito", typeof(string));
             dta_consultaarticulo.Columns.Add("CodMonedaLineaCredito", typeof(string));
             dta_consultaarticulo.Columns.Add("CodRetencion", typeof(string));
+            dta_consultaarticulo.Columns.Add("CodEstado", typeof(string));
 
 
             dtr_consultafila = dta_consultaarticulo.NewRow();
@@ -1893,7 +1894,7 @@ namespace SistemaInventario.Maestros
             objEntidad.CodCtaCte = Convert.ToInt32(objTablaFiltro["Filtro_CodCtaCte"]);
             objEntidad.Email = Convert.ToString(objTablaFiltro["Filtro_Email"]);
             objEntidad.FlagRetencion = Convert.ToInt32(objTablaFiltro["Filtro_Flagretencion"]);
-
+            objEntidad.CodEstado = Convert.ToInt32(objTablaFiltro["Filtro_Estado"]);
             objOperacion = new TCCuentaCorrienteCN();
 
             objOperacion.F_TCCuentaCorriente_Update(objEntidad);

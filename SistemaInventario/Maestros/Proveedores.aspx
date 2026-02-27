@@ -289,6 +289,7 @@
                                 <asp:HiddenField ID="hfRazonSocial" runat="server" Value='<%# Bind("RazonSocial") %>' />
                                 <asp:HiddenField ID="hfEmail" runat="server" Value='<%# Bind("Email") %>' />
                                 <asp:HiddenField ID="hfCodRetencion" runat="server" Value='<%# Bind("CodRetencion") %>' />
+                                <asp:HiddenField ID="hfCodEstado" runat="server" Value='<%# Bind("CodEstado") %>' />
                                 <asp:HiddenField ID="hfLineaCredito" runat="server" Value='0' />
                                 <asp:HiddenField ID="hfDeudaCredito" runat="server" Value='0' />
                                 <asp:HiddenField ID="hfCodMonedaLineaCredito" runat="server" Value='0' />
@@ -348,6 +349,7 @@
                         </td>
                     </tr>
 
+
                        <tr>
                         <td style="font-weight: bold">
                             Nombres
@@ -360,9 +362,33 @@
                                             ForeColor="Blue" Font-Bold="True"></asp:TextBox>
                                     </td>
                                 </tr>
+
+
+
                             </table>
                         </td>
                     </tr>
+
+
+                     <tr>
+                         <td style=" font-weight: bold;">
+                            Estado
+                        </td>
+                        <td style="padding-left: 4px;">
+                            <div id="div_EstadoEdicion">
+                                <asp:DropDownList ID="ddlEstadoEdicion" runat="server"
+                                    Font-Names="Arial" ForeColor="Blue" Font-Bold="True" Width="150px">
+                                    <asp:ListItem Value="1">Activo</asp:ListItem>
+                                    <asp:ListItem Value="2">Inactivo</asp:ListItem>
+                                </asp:DropDownList>
+                            </div>
+                        </td>
+<%--
+                        <!--NO BORRAR -->
+                        <td></td>
+                        <td></td>--%>
+                    </tr>
+
 
                     <tr style="display: none">
                         <td style="font-weight: bold">

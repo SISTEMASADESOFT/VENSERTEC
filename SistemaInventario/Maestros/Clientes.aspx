@@ -287,6 +287,7 @@
                                 <asp:HiddenField ID="hfRazonSocial" runat="server" Value='<%# Bind("RazonSocial") %>' />
                                 <asp:HiddenField ID="hfEmail" runat="server" Value='<%# Bind("Email") %>' />
                                 <asp:HiddenField ID="hfCodRetencion" runat="server" Value='<%# Bind("CodRetencion") %>' />
+                                <asp:HiddenField ID="hfCodEstado" runat="server" Value='<%# Bind("CodEstado") %>' />
                                 <asp:HiddenField ID="hfLineaCredito" runat="server" Value='0' />
                                 <asp:HiddenField ID="hfDeudaCredito" runat="server" Value='0' />
                                 <asp:HiddenField ID="hfCodMonedaLineaCredito" runat="server" Value='0' />
@@ -347,7 +348,7 @@
                             CLIENTE
                         </td>
                         <td colspan='5' style="padding-left: 4px;">
-                            <asp:TextBox ID="txtRazonSocialEdicion" runat="server" Width="500px" Font-Names="Arial"
+                            <asp:TextBox ID="txtRazonSocialEdicion" runat="server" Width="517px" Font-Names="Arial"
                                 ForeColor="Blue" Font-Bold="True"></asp:TextBox>
                         </td>
                     </tr>
@@ -430,14 +431,33 @@
                                 Font-Bold="True" ForeColor="Blue"></asp:TextBox>
                         </td>
                     </tr>
-                       <tr>
-                            <td style="font-weight: bold">
-                                Retencion
-                            </td>
-                            <td style="padding-left: 4px;" colspan='5'>
-                                 <asp:CheckBox ID="chkRetencionEdicion" runat="server" Text="" Font-Bold="True" />
-                            </td>
-                        </tr>
+                    
+                                  <tr>
+                        <td style="font-weight: bold">
+                            Retencion
+                        </td>
+                        <td style="padding-left: 4px;">
+                            <asp:CheckBox ID="chkRetencionEdicion" runat="server" Font-Bold="True" />
+                        </td>
+
+                        <td style="padding-left: 42px; font-weight: bold;">
+                            Estado
+                        </td>
+                        <td style="padding-left: 9px;">
+                            <div id="div_EstadoEdicion">
+                                <asp:DropDownList ID="ddlEstadoEdicion" runat="server"
+                                    Font-Names="Arial" ForeColor="Blue" Font-Bold="True" Width="150px">
+                                    <asp:ListItem Value="1">Activo</asp:ListItem>
+                                    <asp:ListItem Value="2">Inactivo</asp:ListItem>
+                                </asp:DropDownList>
+                            </div>
+                        </td>
+<%--
+                        <!--NO BORRAR -->
+                        <td></td>
+                        <td></td>--%>
+                    </tr>
+
                 </table>
             </div>
             <div class="linea-button">
@@ -446,6 +466,8 @@
             </div>
         </div>
     </div>
+
+
     <div id="div_DireccionMultipleAdd" style="display: none">
         <table cellpadding="0" cellspacing="0">
             <tr>

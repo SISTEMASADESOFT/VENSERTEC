@@ -127,11 +127,15 @@
                                 Value="Boleta"></asp:MenuItem>--%>
                             <%--                            <asp:MenuItem NavigateUrl="~/Ventas/OrdenVenta.aspx" Text="Orden Venta" 
                                 Value="Orden Venta"></asp:MenuItem>--%>
-                           <%--   <asp:MenuItem Value="1"  Text="Cotizacion"  NavigateUrl="~/Ventas/RegistroCotizacionWILLIAM.aspx"
-                                ></asp:MenuItem>--%>
+
+
+                              <asp:MenuItem Value="1"  Text="Cotizacion"  NavigateUrl="~/Ventas/RegistroCotizacionWILLIAM.aspx"
+                                ></asp:MenuItem>
+
                             <asp:MenuItem Value="6" Text="Nota de Credito" NavigateUrl="~/Ventas/RegistroNotaCreditoWILLIAM.aspx">
                             </asp:MenuItem>
                         </asp:MenuItem>
+
                         <asp:MenuItem Text="Cuentas Por Cobrar" Value="5000">
                             <asp:MenuItem Value="1" Text="Cobranzas" NavigateUrl="~/CuentasPorCobrar/RegistroCobranzas.aspx">
                             </asp:MenuItem>

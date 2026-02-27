@@ -850,6 +850,7 @@ function F_Controles_Inicializar() {
                         $('#MainContent_txtNroDni').prop('disabled', true);
                         $('#MainContent_ddlTipoCliente').css('background', '#FFFFE0');
                         $('#MainContent_ddlTipoCliente_Edicion').css('background', '#FFFFE0');
+                        $('#MainContent_ddlEstadoEdicion').css('background', '#FFFFE0');
                         $('#MainContent_ddlEstadoResponsable').css('background', '#FFFFE0');
                         $('#MainContent_ddlEstadoResponsableEdicion').css('background', '#FFFFE0');
                         $('#MainContent_txtNroRuc').focus();
@@ -1288,7 +1289,7 @@ function F_EditarRegistro(Fila) {
         var hfDeudaCredito_grilla = '#' + imgID.replace('imgEditarRegistro', 'hfDeudaCredito');
         var hfCodMonedaLineaCredito_grilla = '#' + imgID.replace('imgEditarRegistro', 'hfCodMonedaLineaCredito');
         var hfCodRetencion_grilla = '#' + imgID.replace('imgEditarRegistro', 'hfCodRetencion');
-
+        var hfCodEstado = '#' + imgID.replace('imgEditarRegistro', 'hfCodEstado');
 
 
         var Cuerpo = '#MainContent_';
@@ -1309,7 +1310,7 @@ function F_EditarRegistro(Fila) {
 
         $(Cuerpo + 'txtLineaCreditoEdicion').val($(hfLineaCredito_grilla).val());
         $(Cuerpo + 'ddlMonedaEdicion').val($(hfCodMonedaLineaCredito_grilla).val());
-
+        $(Cuerpo + 'ddlEstadoEdicion').val($(hfCodEstado).val());
 
         $('#hfRegionEdicion').val($(hfCodDepartamento_grilla).val());
         $('#hfProvinciaEdicion').val($(hfCodProvincia_grilla).val());
@@ -1346,7 +1347,7 @@ function F_EditarRegistro(Fila) {
             modal: true,
             title: "Edicion de Cliente",
             title_html: true,
-            height: 300,
+            height: 200,
             width: 655,
             autoOpen: false
         });
@@ -1398,6 +1399,7 @@ if (F_PermisoOpcion(CodigoMenu, CodigoInterno, 'Editar') === "0") return false; 
             Filtro_Email: $(Contenedor + 'txtEmailEdicion').val(),
             Filtro_LineaCredito: '0',
             Filtro_CodMonedaLineaCredito: '1',
+            Filtro_Estado: $(Contenedor + 'ddlEstadoEdicion').val(),
             Filtro_Flagretencion: Flagretencion
         };
 

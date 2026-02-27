@@ -1040,6 +1040,16 @@ function F_EliminarTemporal() {
     }
 }
 
+function checkAll(objRef) {
+    var checkallid = '#' + objRef.id;
+
+    if ($(checkallid).is(':checked'))
+        $('#MainContent_grvDetalleArticulo input:checkbox').prop('checked', true);
+    else
+        $('#MainContent_grvDetalleArticulo input:checkbox').prop('checked', false);
+}
+
+
 function F_ValidarEliminar() {
 
     try {

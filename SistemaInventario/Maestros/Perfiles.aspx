@@ -313,7 +313,7 @@
                                                 Font-Bold="True"></asp:TextBox>
                                         </td>
                                     </tr>
-                                    <tr style="display: none">
+                                    <tr>
                                         <td style="font-weight: bold; width: 65px">
                                             Caja
                                         </td>

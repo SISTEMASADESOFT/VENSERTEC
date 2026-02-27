@@ -155,11 +155,11 @@ namespace CapaDatos
                         sql_comando.Parameters.Add("@NroRuc", SqlDbType.VarChar, 11).Value = objEntidadBE.NroRuc;
                         sql_comando.Parameters.Add("@NroDni", SqlDbType.VarChar, 8).Value = objEntidadBE.NroDni;
                         sql_comando.Parameters.Add("@Correo", SqlDbType.VarChar, 100).Value = objEntidadBE.Correo;
-                        //sql_comando.Parameters.Add("@CodDireccion", SqlDbType.Int).Value = objEntidadBE.CodDireccion;
+                        sql_comando.Parameters.Add("@CodDireccion", SqlDbType.Int).Value = objEntidadBE.CodDireccion;
                         sql_comando.Parameters.Add("@Direccion", SqlDbType.VarChar, 500).Value = objEntidadBE.Direccion;
-                        //sql_comando.Parameters.Add("@CodDepartamento", SqlDbType.Int).Value = objEntidadBE.CodDepartamento;
-                        //sql_comando.Parameters.Add("@CodProvincia", SqlDbType.Int).Value = objEntidadBE.CodProvincia;
-                        //sql_comando.Parameters.Add("@CodDistrito", SqlDbType.Int).Value = objEntidadBE.CodDistrito;
+                        sql_comando.Parameters.Add("@CodDepartamento", SqlDbType.Int).Value = objEntidadBE.CodDepartamento;
+                        sql_comando.Parameters.Add("@CodProvincia", SqlDbType.Int).Value = objEntidadBE.CodProvincia;
+                        sql_comando.Parameters.Add("@CodDistrito", SqlDbType.Int).Value = objEntidadBE.CodDistrito;
                         sql_comando.Parameters.Add("@KM", SqlDbType.VarChar, 250).Value = objEntidadBE.KM;
 
                         sql_comando.Parameters.Add("@Email1", SqlDbType.VarChar, 100).Value = objEntidadBE.Email1;
@@ -259,11 +259,11 @@ namespace CapaDatos
                         sql_comando.Parameters.Add("@NroRuc", SqlDbType.VarChar, 11).Value = objEntidadBE.NroRuc;
                         sql_comando.Parameters.Add("@NroDni", SqlDbType.VarChar, 8).Value = objEntidadBE.NroDni;
                         sql_comando.Parameters.Add("@Correo", SqlDbType.VarChar, 100).Value = objEntidadBE.Correo;
-                        //sql_comando.Parameters.Add("@CodDireccion", SqlDbType.Int).Value = objEntidadBE.CodDireccion;
+                        sql_comando.Parameters.Add("@CodDireccion", SqlDbType.Int).Value = objEntidadBE.CodDireccion;
                         sql_comando.Parameters.Add("@Direccion", SqlDbType.VarChar, 500).Value = objEntidadBE.Direccion;
-                        //sql_comando.Parameters.Add("@CodDepartamento", SqlDbType.Int).Value = objEntidadBE.CodDepartamento;
-                        //sql_comando.Parameters.Add("@CodProvincia", SqlDbType.Int).Value = objEntidadBE.CodProvincia;
-                        //sql_comando.Parameters.Add("@CodDistrito", SqlDbType.Int).Value = objEntidadBE.CodDistrito;
+                        sql_comando.Parameters.Add("@CodDepartamento", SqlDbType.Int).Value = objEntidadBE.CodDepartamento;
+                        sql_comando.Parameters.Add("@CodProvincia", SqlDbType.Int).Value = objEntidadBE.CodProvincia;
+                        sql_comando.Parameters.Add("@CodDistrito", SqlDbType.Int).Value = objEntidadBE.CodDistrito;
                         sql_comando.Parameters.Add("@KM", SqlDbType.VarChar, 250).Value = objEntidadBE.KM;
 
                         sql_comando.Parameters.Add("@Email1", SqlDbType.VarChar, 100).Value = objEntidadBE.Email1;
@@ -289,8 +289,11 @@ namespace CapaDatos
                         SqlParameter Numero = sql_comando.Parameters.Add("@NumeroDoc", SqlDbType.VarChar, 8);
                         Numero.Direction = ParameterDirection.Output;
 
-                        SqlParameter NumeroDocAnterior = sql_comando.Parameters.Add("@NumeroDocAnterior", SqlDbType.VarChar, 8);
-                        Numero.Direction = ParameterDirection.Output;
+                        //SqlParameter NumeroDocAnterior = sql_comando.Parameters.Add("@NumeroDocAnterior2", SqlDbType.VarChar, 8);
+                        //Numero.Direction = ParameterDirection.Output;
+
+                        SqlParameter NumeroDocAnterior=sql_comando.Parameters.Add("@NumeroDocAnterior", SqlDbType.VarChar, 8);
+                        NumeroDocAnterior.Direction = ParameterDirection.Output;
 
                         sql_comando.ExecuteNonQuery();
 

@@ -1311,6 +1311,16 @@ function F_VerSeries(HlkControlID) {
 
 }
 
+function checkAll(objRef) {
+    var checkallid = '#' + objRef.id;
+
+    if ($(checkallid).is(':checked'))
+        $('#MainContent_grvDetalleArticulo input:checkbox').prop('checked', true);
+    else
+        $('#MainContent_grvDetalleArticulo input:checkbox').prop('checked', false);
+}
+
+
 function F_EliminarSerie(Fila) {
     try {
         var imgID = Fila.id;

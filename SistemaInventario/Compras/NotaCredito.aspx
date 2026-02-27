@@ -207,9 +207,15 @@
                     Width="1000px">
                     <Columns>
                         <asp:TemplateField HeaderText="" ItemStyle-HorizontalAlign="Center">
+
+                            <HeaderTemplate>
+                              <asp:CheckBox ID="checkAll" runat="server" onclick="checkAll(this);" />
+                          </HeaderTemplate>
+
                             <ItemTemplate>
                                 <asp:CheckBox runat="server" ID="chkEliminar" CssClass="chkDelete" Text="" />
                             </ItemTemplate>
+
                         </asp:TemplateField>
                         <asp:TemplateField>
                             <ItemTemplate>

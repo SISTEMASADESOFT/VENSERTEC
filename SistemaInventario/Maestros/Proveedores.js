@@ -844,6 +844,7 @@ function F_Controles_Inicializar() {
                         $('#MainContent_ddlTipoCliente_Edicion').css('background', '#FFFFE0');
                         $('#MainContent_ddlEstadoResponsable').css('background', '#FFFFE0');
                         $('#MainContent_ddlEstadoResponsableEdicion').css('background', '#FFFFE0');
+                        $('#MainContent_ddlEstadoEdicion').css('background', '#FFFFE0');
                         $('#MainContent_txtNroRuc').focus();
                     }
                     else {
@@ -1305,6 +1306,7 @@ function F_EditarRegistro(Fila) {
         var hfDeudaCredito_grilla = '#' + imgID.replace('imgEditarRegistro', 'hfDeudaCredito');
         var hfCodMonedaLineaCredito_grilla = '#' + imgID.replace('imgEditarRegistro', 'hfCodMonedaLineaCredito');
         var hfCodRetencion_grilla = '#' + imgID.replace('imgEditarRegistro', 'hfCodRetencion');
+        var hfCodEstado = '#' + imgID.replace('imgEditarRegistro', 'hfCodEstado');
 
 
 
@@ -1326,7 +1328,7 @@ function F_EditarRegistro(Fila) {
 
         $(Cuerpo + 'txtLineaCreditoEdicion').val($(hfLineaCredito_grilla).val());
         $(Cuerpo + 'ddlMonedaEdicion').val($(hfCodMonedaLineaCredito_grilla).val());
-
+        $(Cuerpo + 'ddlEstadoEdicion').val($(hfCodEstado).val());
 
         $('#hfRegionEdicion').val($(hfCodDepartamento_grilla).val());
         $('#hfProvinciaEdicion').val($(hfCodProvincia_grilla).val());
@@ -1413,6 +1415,7 @@ function F_EdicionRegistro() {
             Filtro_CodCtaCte: $('#hfCodCtaCte').val(),
             Filtro_Descripcion: $(Contenedor + 'txtDescripcionConsulta').val(),
             Filtro_Email: $(Contenedor + 'txtEmailEdicion').val(),
+            Filtro_Estado: $(Contenedor + 'ddlEstadoEdicion').val(),
             Filtro_LineaCredito: '0',
             Filtro_CodMonedaLineaCredito: '1',
             Filtro_Flagretencion: Flagretencion

@@ -141,6 +141,10 @@ namespace CapaDatos
                         sql_comando.Parameters.Add("@Email", SqlDbType.VarChar, 500).Value = objEntidadBE.Email;
                         sql_comando.Parameters.Add("@FlagRetencion", SqlDbType.Int).Value = objEntidadBE.FlagRetencion;
 
+                        if (objEntidadBE.CodEstado > 0)
+                        sql_comando.Parameters.Add("@CodEstado", SqlDbType.Int).Value = objEntidadBE.CodEstado;
+                        
+
                         SqlParameter MsgError = sql_comando.Parameters.Add("@MsgError", SqlDbType.VarChar, 1000);
                         MsgError.Direction = ParameterDirection.Output;
 
