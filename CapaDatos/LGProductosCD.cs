@@ -1482,6 +1482,8 @@ namespace CapaDatos
                       if (objEntidadBE.Ubicacion != "")
                           sql_comando.Parameters.Add("@Ubicacion", SqlDbType.VarChar, 100).Value = objEntidadBE.Ubicacion;
 
+                      sql_comando.Parameters.Add("@FlagProductosConStock", SqlDbType.Int).Value = objEntidadBE.FlagProductosConStock;
+
                       dta_consulta = new DataTable();
 
                       dta_consulta.Load(sql_comando.ExecuteReader());

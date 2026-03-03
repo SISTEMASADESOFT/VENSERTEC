@@ -1715,6 +1715,7 @@ function F_EditarRegistro(Fila) {
              var Observacion = '#' + imgID.replace('imgEditarRegistro', 'hfobservacion');   
              var lblRazonSocial = '#' + imgID.replace('imgEditarRegistro', 'lblRazonSocial');  
              var Observacion = '#' + imgID.replace('imgEditarRegistro', 'hfobservacion');  
+             var hfCodCtaCte = '#' + imgID.replace('imgEditarRegistro', 'hfCodCtaCte');
              var Cadena = 'Ingresar los sgtes. Datos:'; 
 
              if ($.trim($(lblRazonSocial).text().toUpperCase()) !="CLIENTE VARIOS")
@@ -1727,7 +1728,8 @@ function F_EditarRegistro(Fila) {
             {alertify.log(Cadena);
             return false;}
 
-            $('#hfid').val($(codigo).val());    
+            $('#hfid').val($(codigo).val()); 
+              $('#hfCodCtaCte').val($(hfCodCtaCte).val());    
             $('#MainContent_txtProveedorEdicion').val($(lblRazonSocial).text());           
             $('#MainContent_txtObservacionEdicion').val($(Observacion).val());   
                      

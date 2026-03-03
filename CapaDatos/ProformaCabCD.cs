@@ -274,7 +274,7 @@ namespace CapaDatos
                         sql_comando.Parameters.Add("@Email6", SqlDbType.VarChar, 100).Value = objEntidadBE.Email6;
                         sql_comando.Parameters.Add("@Requerimiento", SqlDbType.VarChar, 200).Value = objEntidadBE.Requerimiento;
                         sql_comando.Parameters.Add("@CodFactura_Anterior", SqlDbType.Int).Value = objEntidadBE.CodFactura_Anterior;
-                        sql_comando.Parameters.Add("@NumeroDocAnterior", SqlDbType.VarChar, 8).Value = objEntidadBE.NumeroAnterior;
+                  //      sql_comando.Parameters.Add("@NumeroDocAnterior", SqlDbType.VarChar, 8).Value = objEntidadBE.NumeroAnterior;
                         sql_comando.Parameters.Add("@CodVendedor", SqlDbType.Int).Value = objEntidadBE.CodVendedor;
                         sql_comando.Parameters.Add("@NroOC", SqlDbType.VarChar, 1000).Value = objEntidadBE.NroOC;
                         sql_comando.Parameters.Add("@NroOperacion", SqlDbType.VarChar, 100).Value = objEntidadBE.NroOperacion;
@@ -289,11 +289,13 @@ namespace CapaDatos
                         SqlParameter Numero = sql_comando.Parameters.Add("@NumeroDoc", SqlDbType.VarChar, 8);
                         Numero.Direction = ParameterDirection.Output;
 
-                        //SqlParameter NumeroDocAnterior = sql_comando.Parameters.Add("@NumeroDocAnterior2", SqlDbType.VarChar, 8);
-                        //Numero.Direction = ParameterDirection.Output;
+                        //SqlParameter NumeroDocAnterior=sql_comando.Parameters.Add("@NumeroDocAnterior", SqlDbType.VarChar, 8);
+                        //NumeroDocAnterior.Direction = ParameterDirection.Output;
+                        SqlParameter numeroDocAnterior = new SqlParameter("@NumeroDocAnterior", SqlDbType.VarChar, 8);
+                        numeroDocAnterior.Direction = ParameterDirection.InputOutput;
+                        numeroDocAnterior.Value = objEntidadBE.NumeroAnterior ?? (object)DBNull.Value;
 
-                        SqlParameter NumeroDocAnterior=sql_comando.Parameters.Add("@NumeroDocAnterior", SqlDbType.VarChar, 8);
-                        NumeroDocAnterior.Direction = ParameterDirection.Output;
+                        sql_comando.Parameters.Add(numeroDocAnterior);
 
                         sql_comando.ExecuteNonQuery();
 

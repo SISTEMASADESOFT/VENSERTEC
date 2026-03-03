@@ -1032,7 +1032,7 @@ namespace SistemaInventario.Ventas
             dta_consulta.Columns.Add("EstatusSunat", typeof(string));
             dta_consulta.Columns.Add("CorreoSunat", typeof(string));
             dta_consulta.Columns.Add("CodTipoDoc", typeof(string));
-
+            dta_consulta.Columns.Add("OperacionNC", typeof(string));
             dtr_filaconsulta = dta_consulta.NewRow();
 
             dtr_filaconsulta[0] = "";

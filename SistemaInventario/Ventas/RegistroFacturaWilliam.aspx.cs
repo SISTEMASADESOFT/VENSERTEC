@@ -2631,6 +2631,7 @@ namespace SistemaInventario.Ventas
             objEntidad.CodCliente = Convert.ToInt32(objTablaFiltro["Filtro_CodCliente"]);
             objEntidad.CodFamilia = Convert.ToString(objTablaFiltro["Filtro_CodFamilia"]);
             objEntidad.Ubicacion = Convert.ToString(objTablaFiltro["Filtro_Ubicacion"]);
+            objEntidad.FlagProductosConStock = Convert.ToInt32(objTablaFiltro["Filtro_FlagProductosConStock"]);
 
             grvConsulta.DataSource = objOperacion.F_LGProductos_ListarVentas_Descuento(objEntidad);
             grvConsulta.DataBind();

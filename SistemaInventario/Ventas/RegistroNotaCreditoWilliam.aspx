@@ -527,6 +527,12 @@
                             <HeaderStyle HorizontalAlign="Center" />
                             <ItemStyle HorizontalAlign="Right" />
                         </asp:BoundField>
+
+                         <asp:BoundField DataField="OperacionNC" HeaderText="Operacion" HeaderStyle-HorizontalAlign="Center">
+                            <HeaderStyle HorizontalAlign="Center" />
+                            <ItemStyle HorizontalAlign="Left" />
+                        </asp:BoundField>
+
                         <asp:TemplateField HeaderText="Estado" HeaderStyle-HorizontalAlign="Center">
                             <ItemStyle HorizontalAlign="Left" />
                             <ItemTemplate>

@@ -4761,6 +4761,7 @@ function F_Buscar_Productos() {
                 Filtro_CodTipoDoc: $('#MainContent_ddlTipoDoc').val(),
                 Filtro_CodCliente: $('#hfCodCtaCte').val(),
                 Filtro_CodFamilia : '0',
+                Filtro_FlagProductosConStock: ($('#MainContent_chkProductosConStock').is(':checked'))? 1 : 0,
                 Filtro_Ubicacion : ''
             };
 
@@ -6874,7 +6875,8 @@ function F_Buscar(){
 
               if ($('#MainContent_chkPlacaConsulta').is(':checked'))
               Placa=$('#MainContent_txtPlacaConsulta').val();
-              
+
+ 
               
               var objParams = {
                                         Filtro_Serie: $("#MainContent_ddlSerieConsulta option:selected").text(),
@@ -6890,7 +6892,8 @@ function F_Buscar(){
                                         Filtro_Estado: $("#MainContent_ddlEstadoConsulta").val(),
                                         Filtro_EstadoNP: $("#MainContent_ddlEstadoConsultaNP").val(),
                                         Filtro_ChkProducto: chkProducto,
-                                        Filtro_CodProducto: $('#hfcodproductoconsulta').val()                                        
+                                        Filtro_CodProducto: $('#hfcodproductoconsulta').val()       
+                                                                        
                                };
 
                 var arg = Sys.Serialization.JavaScriptSerializer.serialize(objParams);

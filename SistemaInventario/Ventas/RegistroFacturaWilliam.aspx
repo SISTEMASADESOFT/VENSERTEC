@@ -64,8 +64,10 @@
                                             Cliente
                                         </td>
                                         <td>
-                                            <asp:TextBox ID="txtNroRuc" runat="server" Width="70px" Font-Names="Arial" ForeColor="Blue"
-                                                Font-Bold="True" MaxLength="11" onblur="F_BUSCARDNIONBLURENTER(MainContent_txtNroRuc); return false;" CssClass="autocomplete-input"></asp:TextBox>
+                           <%--                 <asp:TextBox ID="txtNroRuc" runat="server" Width="70px" Font-Names="Arial" ForeColor="Blue"
+                                                Font-Bold="True" MaxLength="11" onblur="F_BUSCARDNIONBLURENTER(MainContent_txtNroRuc); return false;" CssClass="autocomplete-input"></asp:TextBox>--%>
+                                                   <asp:TextBox ID="txtNroRuc" runat="server" Width="70px" Font-Names="Arial" ForeColor="Blue"
+                                                Font-Bold="True" MaxLength="11" onblur="F_ValidaRucDni(); return false;" CssClass="autocomplete-input"></asp:TextBox>
                                         </td>
                                         <td id="td_loading" style="font-weight: bold; padding-left: 5px; display: none">
                                             <img src="../Asset/images/loading.gif" />
@@ -1403,16 +1405,28 @@
                                 Descripcion
                             </td>
                             <td>
-                                <asp:TextBox ID="txtArticulo" runat="server" Width="600px" Font-Names="Arial" ForeColor="Blue"
+                                <asp:TextBox ID="txtArticulo" runat="server" Width="570px" Font-Names="Arial" ForeColor="Blue"
                                     Font-Bold="True"></asp:TextBox>
                             </td>
+
+
+                            <td>
+                                <asp:CheckBox runat="server" ID="chkProductosConStock" Text="Productos con Stock"
+                                    Checked="True" Font-Bold="True" />
+                            </td>
+
+
                             <td style="font-weight: bold;">
                                 total
                             </td>
+
+
                             <td>
                                 <asp:TextBox ID="txtTotal2" runat="server" Width="80px" Font-Names="Arial" ForeColor="Blue"
                                     Font-Bold="True" ReadOnly="True" Text="0.00" CssClass="Derecha"></asp:TextBox>
                             </td>
+
+
                             <td style="font-weight: bold;">
                                 <div>
                                     <asp:Label ID="Label1" runat="server" Text="Compra" Font-Bold="True"></asp:Label>
