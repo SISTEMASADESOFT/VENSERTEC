@@ -311,6 +311,8 @@ public class DocumentoVentaCabCE
     public string ObservacionGuia { get; set; }
 
     public int CodTrasladoEdicion { get; set; }
+
+    public string Celular { get; set; }
 }
 
 

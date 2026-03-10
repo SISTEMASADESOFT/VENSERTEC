@@ -15,6 +15,9 @@ using SistemaInventario.Servicios;
 using System.Text.RegularExpressions;
 using KeepAutomation.Barcode.Crystal;
 using CrystalDecisions.CrystalReports.Engine;
+using Newtonsoft.Json;
+using System.Net;
+using System.Text;
 
 namespace SistemaInventario.App_Code
 {
@@ -977,6 +980,259 @@ namespace SistemaInventario.App_Code
             public List<TCDireccionCE> rows { get; set; }
         }
 
+        [WebMethod(EnableSession = true)]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string F_WhatsAppHabilitado()
+        {
+            int CodAlmacen = Convert.ToInt32(HttpContext.Current.Session["CodSede"]);
+            int CodEmpresa = Convert.ToInt32(HttpContext.Current.Session["CodEmpresa"]);
+
+
+            DataTable dt = new TCCuentaCorrienteCN().ValidarCredencialesWhatsAppBasico(CodEmpresa, CodAlmacen);
+
+            if (dt == null || dt.Rows.Count == 0)
+                return "0";
+
+            DataRow row = dt.Rows[0];
+
+
+            string numeroRemitente = row["NumeroRemitente"].ToString();
+            if (string.IsNullOrWhiteSpace(numeroRemitente))
+                return "0";
+
+
+            string tokenAlmacen = row["TokenWhatsAppAlmacen"].ToString();
+            if (string.IsNullOrWhiteSpace(tokenAlmacen))
+                return "0";
+
+
+            string tokenEmpresa = row["UrlApiWhatsApp"].ToString();
+            if (string.IsNullOrWhiteSpace(tokenEmpresa))
+                return "0";
+
+            return "1";
+        }
+
+
+
+        [WebMethod(EnableSession = true)]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void EnviarFacturaWhatsAppDesdeGrilla(int codDocumentoVenta)
+        {
+            int codUsuario = Convert.ToInt32(HttpContext.Current.Session["CodUsuario"]);
+            int codAlmacen = Convert.ToInt32(HttpContext.Current.Session["CodSede"]);
+            DataTable dtCredenciales = new TCCuentaCorrienteCN().ObtenerCredencialesWhatsApp(codAlmacen);
+
+            if (dtCredenciales.Rows.Count == 0)
+                throw new Exception("No se encontraron credenciales para WhatsApp.");
+
+            string msgError = dtCredenciales.Rows[0]["msgError"].ToString();
+            if (!string.IsNullOrEmpty(msgError))
+                throw new Exception(msgError);
+
+            string token = dtCredenciales.Rows[0]["Token"].ToString();
+            string remitente = dtCredenciales.Rows[0]["Numero"].ToString();
+            string baseUrl = dtCredenciales.Rows[0]["BaseUrl"].ToString();
+            string Mensaje = dtCredenciales.Rows[0]["Mensaje"].ToString();
+            string NombreDocumento = "";
+
+            DocumentoVentaCabCE objEntidad = new DocumentoVentaCabCE();
+            objEntidad.CodDocumentoVenta = codDocumentoVenta;
+            objEntidad.CodTipoDoc = 1;
+            var dt = new DocumentoVentaCabCN().F_DocumentoVentaCab_Impresion_Factura_Electronica(objEntidad);
+
+            NombreDocumento = dt.Rows[0]["RucEmpresa"].ToString().Replace("R.U.C. : ", "") + "-" + dt.Rows[0]["T_Codigo_Tipo_Documento_Sunat"].ToString() + '-' + dt.Rows[0]["SerieDoc"].ToString() + '-' + dt.Rows[0]["NumeroDoc"].ToString() + ".pdf";
+
+            if (dt.Rows.Count == 0)
+                throw new Exception("No se encontró la factura.");
+            var dr = dt.Rows[0];
+
+            // QR
+            BarCode qr = new BarCode();
+            qr.Symbology = KeepAutomation.Barcode.Symbology.QRCode;
+            qr.CodeToEncode = string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}",
+                dr["RucEmpresa"].ToString().Replace("R.U.C. : ", ""),
+                dr["T_Codigo_Tipo_Documento_Sunat"],
+                dr["SerieDoc"],
+                dr["NumeroDoc"],
+                dr["Igv"],
+                dr["Total"],
+                dr["F_Fecha_Emision"],
+                dr["T_Codigo_Doc_Identidad_Sunat"],
+                dr["Ruc"]);
+            qr.X = 6;
+            qr.Y = 6;
+            qr.LeftMargin = 6;
+            qr.RightMargin = 6;
+            qr.TopMargin = 6;
+            qr.BottomMargin = 6;
+            qr.ImageFormat = System.Drawing.Imaging.ImageFormat.Png;
+            dt.Columns.Add("QR", typeof(byte[]));
+            dr["QR"] = qr.generateBarcodeToByteArray();
+
+            ReportDocument rpt = new ReportDocument();
+            dt.TableName = dt.Rows[0]["Datatable"].ToString();
+            rpt.Load(Server.MapPath("~/Reportes/" + dt.Rows[0]["FormatoRpt"].ToString()));
+            rpt.SetDataSource(dt);
+
+            using (MemoryStream ms = (MemoryStream)rpt.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat))
+            {
+                var numeros = dr["CelularCliente"].ToString().Split('~');
+
+                foreach (var numero in numeros)
+                {
+                    string celular = numero.Trim();
+                    if (string.IsNullOrEmpty(celular))
+                    {
+                        throw new Exception("EL CLIENTE NO TIENE NUMERO DE CELULAR REGISTRADO");
+
+                    }
+                    if (celular.Length != 11 || !celular.StartsWith("51"))
+                    {
+                        throw new Exception("NUMERO DE CLIENTE INVALIDO ");
+                    }
+
+                    EnviarFacturaPorWhatsApp(ms, celular, token, remitente, baseUrl, Mensaje, NombreDocumento);
+
+                    RegistrarMensajeWhatsApp(codUsuario, codDocumentoVenta, 1, "ENVIADO AL NUMERO: " + celular, codAlmacen);
+
+                }
+            }
+        }
+
+
+        private void RegistrarMensajeWhatsApp(int codUsuario, int codDocumentoVenta, int codCategoria, string observacion, int codAlmacen)
+        {
+            try
+            {
+
+                TCCuentaCorrienteCN objOperacion = new TCCuentaCorrienteCN();
+
+
+                objOperacion.RegistrarMensajeWhatsApp(codUsuario, codDocumentoVenta, codCategoria, observacion, codAlmacen);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public void EnviarFacturaPorWhatsApp(MemoryStream msMemoria, string numeroCelular, string token, string remitente, string baseUrl, string Mensaje, string NombreDocumento)
+        {
+            if (msMemoria == null || msMemoria.Length == 0)
+                throw new Exception("El PDF esta vacio o no se genero.");
+
+            if (string.IsNullOrEmpty(numeroCelular))
+                throw new Exception("Numero de celular no disponible.");
+
+            //string baseUrl = ConfigurationManager.AppSettings["WHATSAPP_API_URL_BASE"];
+
+            //string token = ConfigurationManager.AppSettings["WHATSAPP_API_TOKEN"];
+            //string remitente = ConfigurationManager.AppSettings["WHATSAPP_API_REMITENTE"];
+
+            // URL correcta url + remitente
+            //string apiUrl = baseUrl + remitente + "/send/file";
+            string apiUrl = baseUrl + "send/file"; // solo la ruta del endpoint
+
+
+
+            ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072; // TLS 1.2 2.2 dabaproblemas
+
+            string boundary = "----Boundary" + DateTime.Now.Ticks.ToString("x");
+            byte[] boundaryBytes = Encoding.UTF8.GetBytes("\r\n--" + boundary + "\r\n");
+            byte[] trailer = Encoding.UTF8.GetBytes("\r\n--" + boundary + "--\r\n");
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(apiUrl);
+            request.Method = "POST";
+            request.ContentType = "multipart/form-data; boundary=" + boundary;
+            request.Headers["Authorization"] = "Bearer " + token;
+            request.Headers["device-id"] = remitente; //
+
+            using (Stream requestStream = request.GetRequestStream())
+            {
+
+                requestStream.Write(boundaryBytes, 0, boundaryBytes.Length);
+                string formData = "Content-Disposition: form-data; name=\"phone\"\r\n\r\n" +
+                                  numeroCelular + "@s.whatsapp.net";
+                byte[] formDataBytes = Encoding.UTF8.GetBytes(formData);
+                requestStream.Write(formDataBytes, 0, formDataBytes.Length);
+
+
+                requestStream.Write(boundaryBytes, 0, boundaryBytes.Length);
+                string captionData = "Content-Disposition: form-data; name=\"caption\"\r\n\r\n" +
+                    //"Gracias por su compra. Le enviamos su factura en PDF.";
+                                     Mensaje;
+                byte[] captionDataBytes = Encoding.UTF8.GetBytes(captionData);
+                requestStream.Write(captionDataBytes, 0, captionDataBytes.Length);
+
+
+                requestStream.Write(boundaryBytes, 0, boundaryBytes.Length);
+                string forwardedData = "Content-Disposition: form-data; name=\"is_forwarded\"\r\n\r\nfalse";
+                byte[] forwardedDataBytes = Encoding.UTF8.GetBytes(forwardedData);
+                requestStream.Write(forwardedDataBytes, 0, forwardedDataBytes.Length);
+
+                requestStream.Write(boundaryBytes, 0, boundaryBytes.Length);
+                //string fileHeader = "Content-Disposition: form-data; name=\"file\"; filename=\"factura.pdf\"\r\n" +
+                //                    "Content-Type: application/pdf\r\n\r\n";
+
+
+
+                string fileHeader = "Content-Disposition: form-data; name=\"file\"; filename=\"" + NombreDocumento + " \"\r\n" +
+                      "Content-Type: application/pdf\r\n\r\n";
+
+
+                byte[] fileHeaderBytes = Encoding.UTF8.GetBytes(fileHeader);
+                requestStream.Write(fileHeaderBytes, 0, fileHeaderBytes.Length);
+
+                msMemoria.Position = 0;
+                msMemoria.CopyTo(requestStream);
+
+                requestStream.Write(trailer, 0, trailer.Length);
+            }
+
+            try
+            {
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                {
+                    string responseText = reader.ReadToEnd();
+
+                }
+            }
+            catch (WebException ex)
+            {
+                string errorMessage = "Error al enviar WhatsApp: ";
+                if (ex.Response != null)
+                {
+                    using (StreamReader reader = new StreamReader(ex.Response.GetResponseStream()))
+                    {
+                        string responseContent = reader.ReadToEnd();
+                        errorMessage += responseContent;
+
+
+                        if (responseContent.Contains("token expired") || responseContent.Contains("invalid token"))
+                        {
+                            throw new Exception("Token Expirado");
+                        }
+
+                        if (responseContent.Contains("404") || responseContent.Contains("Recurso no encontrado"))
+                        {
+                            throw new Exception("Ejecute el Programa o Numero Remitente Incorrecto");
+                        }
+
+                    }
+                }
+                else
+                {
+                    errorMessage += ex.Message;
+                }
+
+                throw new Exception(errorMessage);
+            }
+        }
+
+
+
         //nueva lista de clients para consumir en listas multiples
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -1179,6 +1435,7 @@ namespace SistemaInventario.App_Code
             }
 
 
+
             public string GenerarGUIAS(int CodTraslado, string nombreRutaDocumentoTemp, string TipoImp)
             {
                 TrasladosCabCE objEntidadTraslados = new TrasladosCabCE();
@@ -1223,6 +1480,11 @@ namespace SistemaInventario.App_Code
 
                 return tempDirectory;
             }
+
+
+
+         
+
 
             
         }

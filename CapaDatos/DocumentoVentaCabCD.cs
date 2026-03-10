@@ -440,7 +440,7 @@ namespace CapaDatos
                         sql_comando.Parameters.Add("@Placa8", SqlDbType.VarChar, 20).Value = objEntidadBE.Placa8;
 
                         sql_comando.Parameters.Add("@KM", SqlDbType.VarChar, 100).Value = objEntidadBE.KM;
-                        //sql_comando.Parameters.Add("@CodDireccion", SqlDbType.Int).Value = objEntidadBE.CodDireccion;
+                        sql_comando.Parameters.Add("@CodDireccion", SqlDbType.Int).Value = objEntidadBE.CodDireccion;
                         sql_comando.Parameters.Add("@Observacion", SqlDbType.VarChar, 100).Value = objEntidadBE.Observacion;
                         sql_comando.Parameters.Add("@CodVendedor", SqlDbType.Int).Value = objEntidadBE.CodVendedor;
 
@@ -461,34 +461,34 @@ namespace CapaDatos
                         sql_comando.Parameters.Add("@Requerimiento", SqlDbType.VarChar, 200).Value = objEntidadBE.Requerimiento;
                         sql_comando.Parameters.Add("@CodDocumentoVentaDireccion", SqlDbType.Int).Value = objEntidadBE.CodDocumentoVentaDireccion;
                         sql_comando.Parameters.Add("@CodTipoOperacion", SqlDbType.Int).Value = objEntidadBE.CodTipoOperacion;
+                        sql_comando.Parameters.Add("@Celular", SqlDbType.VarChar, 20).Value = objEntidadBE.Celular;
 
-
-                        ////transporista miguel
+                        //transporista miguel
                         //sql_comando.Parameters.Add("@FlagGuia", SqlDbType.Int).Value = objEntidadBE.FlagGuia;
                         //sql_comando.Parameters.Add("@SerieGuia", SqlDbType.VarChar, 4).Value = objEntidadBE.SerieGuia;
 
                         //sql_comando.Parameters.Add("@NumeroGuia", SqlDbType.VarChar, 8).Value = objEntidadBE.NumeroGuia;
                         //sql_comando.Parameters.Add("@FechaTraslado", SqlDbType.SmallDateTime).Value = objEntidadBE.FechaTraslado;
-                        //sql_comando.Parameters.Add("@Destino", SqlDbType.VarChar, 250).Value = objEntidadBE.Destino;
+                        sql_comando.Parameters.Add("@Destino", SqlDbType.VarChar, 250).Value = objEntidadBE.Destino;
 
                         //sql_comando.Parameters.Add("@PlacaTraslado", SqlDbType.VarChar, 20).Value = objEntidadBE.PlacaTraslado;
-                        //sql_comando.Parameters.Add("@DireccionTrans", SqlDbType.VarChar, 100).Value = objEntidadBE.DireccionTrans;
+                        sql_comando.Parameters.Add("@DireccionTrans", SqlDbType.VarChar, 100).Value = objEntidadBE.DireccionTrans;
                         //sql_comando.Parameters.Add("@CodTransportista", SqlDbType.Int).Value = objEntidadBE.CodTransportista;
-                        //sql_comando.Parameters.Add("@CodDireccionTransportista", SqlDbType.Int).Value = objEntidadBE.CodDireccionTransportista;
-                        //if (objEntidadBE.Transportista.Trim() != "")
-                        //    sql_comando.Parameters.Add("@Transportista", SqlDbType.VarChar, 100).Value = objEntidadBE.Transportista;
-                        //if (objEntidadBE.Marca.Trim() != "")
-                        //    sql_comando.Parameters.Add("@Marca", SqlDbType.VarChar, 100).Value = objEntidadBE.Marca;
-                        //if (objEntidadBE.Licencia.Trim() != "")
-                        //    sql_comando.Parameters.Add("@Licencia", SqlDbType.VarChar, 100).Value = objEntidadBE.Licencia;
-                        //if (objEntidadBE.NuBultos.Trim() != "")
-                        //    sql_comando.Parameters.Add("@NuBultos", SqlDbType.VarChar, 100).Value = objEntidadBE.NuBultos;
-                        //if (objEntidadBE.Peso.Trim() != "")
-                        //    sql_comando.Parameters.Add("@Peso", SqlDbType.VarChar, 100).Value = objEntidadBE.Peso;
-                        //sql_comando.Parameters.Add("@CodProvinciaTransportista", SqlDbType.Int).Value = objEntidadBE.CodProvinciaTransportista;
-                        //sql_comando.Parameters.Add("@CodDistritoTransportista", SqlDbType.Int).Value = objEntidadBE.CodDistritoTransportista;
-                        //sql_comando.Parameters.Add("@CodDepartamentoTransportista", SqlDbType.Int).Value = objEntidadBE.CodDepartamentoTransportista;
-                        //sql_comando.Parameters.Add("@RucTransportista", SqlDbType.VarChar, 11).Value = objEntidadBE.NroRucTransportista;
+                        sql_comando.Parameters.Add("@CodDireccionTransportista", SqlDbType.Int).Value = objEntidadBE.CodDireccionTransportista;
+                        if (objEntidadBE.Transportista.Trim() != "")
+                            sql_comando.Parameters.Add("@Transportista", SqlDbType.VarChar, 100).Value = objEntidadBE.Transportista;
+                        if (objEntidadBE.Marca.Trim() != "")
+                            sql_comando.Parameters.Add("@Marca", SqlDbType.VarChar, 100).Value = objEntidadBE.Marca;
+                        if (objEntidadBE.Licencia.Trim() != "")
+                            sql_comando.Parameters.Add("@Licencia", SqlDbType.VarChar, 100).Value = objEntidadBE.Licencia;
+                        if (objEntidadBE.NuBultos.Trim() != "")
+                            sql_comando.Parameters.Add("@NuBultos", SqlDbType.VarChar, 100).Value = objEntidadBE.NuBultos;
+                      //  if (objEntidadBE.Peso.Trim() != "")
+                        //sql_comando.Parameters.Add("@Peso", SqlDbType.VarChar, 100).Value = objEntidadBE.Peso;
+                        sql_comando.Parameters.Add("@CodProvinciaTransportista", SqlDbType.Int).Value = objEntidadBE.CodProvinciaTransportista;
+                        sql_comando.Parameters.Add("@CodDistritoTransportista", SqlDbType.Int).Value = objEntidadBE.CodDistritoTransportista;
+                        sql_comando.Parameters.Add("@CodDepartamentoTransportista", SqlDbType.Int).Value = objEntidadBE.CodDepartamentoTransportista;
+                        sql_comando.Parameters.Add("@RucTransportista", SqlDbType.VarChar, 11).Value = objEntidadBE.NroRucTransportista;
                         //if (objEntidadBE.CodConductor != 0)
                         //    sql_comando.Parameters.Add("@CodConductor", SqlDbType.Int).Value = objEntidadBE.CodConductor;
                         //sql_comando.Parameters.Add("@CodtipoTransportista", SqlDbType.Int).Value = objEntidadBE.CodtipoTransportista;
@@ -4150,7 +4150,7 @@ namespace CapaDatos
 
                        
                         //sql_comando.Parameters.Add("@CodConductor", SqlDbType.Int).Value = objEntidadBE.CodConductor;
-                        //sql_comando.Parameters.Add("@CodtipoTransportista", SqlDbType.Int).Value = objEntidadBE.CodtipoTransportista;
+                        sql_comando.Parameters.Add("@CodtipoTransportista", SqlDbType.Int).Value = objEntidadBE.CodtipoTransportista;
                         //sql_comando.Parameters.Add("@CodUnidadPeso", SqlDbType.Int).Value = objEntidadBE.CodUnidadPeso;
                         //sql_comando.Parameters.Add("@CodDireccionTransportista", SqlDbType.Int).Value = objEntidadBE.CodDireccionTransportista;
                         //sql_comando.Parameters.Add("@DireccionTransportista", SqlDbType.VarChar, 100).Value = objEntidadBE.DireccionTrans;
@@ -4160,13 +4160,13 @@ namespace CapaDatos
                         //sql_comando.Parameters.Add("@NuBultos", SqlDbType.VarChar, 100).Value = objEntidadBE.NuBultos;
                         //sql_comando.Parameters.Add("@Peso", SqlDbType.VarChar, 100).Value = objEntidadBE.Peso;
                         //sql_comando.Parameters.Add("@FlagGuia", SqlDbType.Int).Value = objEntidadBE.FlagGuia;
-                        //sql_comando.Parameters.Add("@CodTraslado", SqlDbType.Int).Value = objEntidadBE.CodTraslado;
+                        sql_comando.Parameters.Add("@CodTraslado", SqlDbType.Int).Value = objEntidadBE.CodTraslado;
                         //sql_comando.Parameters.Add("@SerieGuia", SqlDbType.VarChar, 10).Value = objEntidadBE.SerieGuia;
                         //sql_comando.Parameters.Add("@NumeroGuia", SqlDbType.VarChar, 10).Value = objEntidadBE.NumeroGuia;
                         //sql_comando.Parameters.Add("@FechaTraslado", SqlDbType.DateTime).Value = objEntidadBE.FechaTraslado;
-                        //sql_comando.Parameters.Add("@Destino", SqlDbType.VarChar, 250).Value = objEntidadBE.Destino;
+                        sql_comando.Parameters.Add("@Destino", SqlDbType.VarChar, 250).Value = objEntidadBE.Destino;
                         //sql_comando.Parameters.Add("@CodTransportista", SqlDbType.Int).Value = objEntidadBE.CodTransportista;
-                        //sql_comando.Parameters.Add("@DireccionTraslado", SqlDbType.VarChar, 100).Value = objEntidadBE.DireccionCompleta;
+                        sql_comando.Parameters.Add("@DireccionTraslado", SqlDbType.VarChar, 100).Value = objEntidadBE.DireccionCompleta;
 
                         // INICIO DATOS DE LA GUIA
 
@@ -4202,8 +4202,12 @@ namespace CapaDatos
                         SqlParameter MsgError = sql_comando.Parameters.Add("@MsgError", SqlDbType.VarChar, 1000);
                         MsgError.Direction = ParameterDirection.Output;
 
-                        SqlParameter CodTraslado = sql_comando.Parameters.Add("@CodTraslado", SqlDbType.Int);
+                        SqlParameter CodTraslado = sql_comando.Parameters.Add("@CodTrasladoSalida", SqlDbType.Int);
                         CodTraslado.Direction = ParameterDirection.Output;
+
+
+                        //SqlParameter CodTraslado = sql_comando.Parameters.Add("@CodTraslado", SqlDbType.Int);
+                        //CodTraslado.Direction = ParameterDirection.Output;
 
 
                         sql_comando.ExecuteNonQuery();

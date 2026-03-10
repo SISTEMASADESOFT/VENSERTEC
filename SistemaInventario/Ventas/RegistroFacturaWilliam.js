@@ -4427,6 +4427,7 @@ function F_Controles_Inicializar() {
                         $('#hfcodproductoconsulta').val('');
                         
       $('#MainContent_txtProductoConsulta').css('background', '#FFFFE0');
+       $('#MainContent_txtCelular').css('background', '#FFFFE0');
       $('#MainContent_ddlVisualizar').css('background', '#FFFFE0');
          
 //            $('#MainContent_txtDestino').val('') ;
@@ -6465,10 +6466,16 @@ function F_GrabarDocumento(){
         var Contenedor = '#MainContent_';
         var FlagGuia='0'; var FlagRetencion='0'; var FlagLetra='0'; var FlagIgv='1'; var NotaPedido='0';var Peso = 0;
         var NroBultos=0;
+        var Celular = '';
         if ($(Contenedor + 'chkGuia').is(':checked')) FlagGuia='1';
         if ($(Contenedor + 'chkRetencion').is(':checked')) FlagRetencion='1';
         if ($(Contenedor + 'ddlFormaPago').val()==12) FlagLetra='1';
         if ($('#hfNotaPedido').val() == '1') NotaPedido='1';
+
+        
+        if ($(Contenedor + 'txtCelular').val() !='')
+            Celular = '51' + $(Contenedor + 'txtCelular').val();
+
 
         var Serie =  $("#MainContent_ddlSerie option:selected").text();
         var Numero = $(Contenedor + 'txtNumero').val();
@@ -6634,26 +6641,28 @@ function F_GrabarDocumento(){
 //                                           Filtro_codunidadpeso: $(Contenedor + 'ddlcodunidadpeso').val()
   // INICIO DATOS DE LA GUIA 
 
-            Filtro_FlagGuia:FlagGuia,
-            Filtro_SerieGuia: $("#MainContent_ddlSerieGuia option:selected").text(),
-            Filtro_NumeroGuia: $(Contenedor + 'txtNumeroGuia').val(),
-            Filtro_CodTipoTransportista: $('#MainContent_ddlTipoTransportista').val(),
-            Filtro_FechaTraslado: $(Contenedor + 'txtFechaTraslado').val(),
-            Filtro_CodDocumentoVentaDireccionDestino: $('#MainContent_ddldireccionNuevaDestino').val(),////
-            Filtro_CodTransportista: $('#hfCodTransportista').val(),
-            Filtro_CodDocumentoVentaDireccionTransportista: $('#MainContent_ddldireccionNuevaTransportista').val(),////
-            Filtro_RucTransportista: $(Contenedor + 'txtNroRucTransportista').val(),
-            Filtro_RazonSocialTransportista: $(Contenedor + 'txtTransportista').val(),          
-            Filtro_PlacaTraslado:$(Contenedor + 'txtPlacaTraslado').val(),
-            Filtro_MarcaVehiculo: $(Contenedor + 'txtMarcaGuia').val(),     
-            Filtro_Licencia: $(Contenedor + 'txtLicenciaGuia').val(),
-            Filtro_NroBultos: NroBultos,
-            Filtro_Peso: Peso,
-            Filtro_CodUnidadPeso: $('#MainContent_ddlcodunidadpeso').val(),
-            Filtro_CodConductor: $('#hfCodConductor').val(),
-            Filtro_ObservacionGuia: $('#MainContent_txtObservacionGuia').val()   
+                                Filtro_FlagGuia:FlagGuia,
+                                Filtro_SerieGuia: $("#MainContent_ddlSerieGuia option:selected").text(),
+                                Filtro_NumeroGuia: $(Contenedor + 'txtNumeroGuia').val(),
+                                Filtro_CodTipoTransportista: $('#MainContent_ddlTipoTransportista').val(),
+                                Filtro_FechaTraslado: $(Contenedor + 'txtFechaTraslado').val(),
+                                Filtro_CodDocumentoVentaDireccionDestino: $('#MainContent_ddldireccionNuevaDestino').val(),////
+                                Filtro_CodTransportista: $('#hfCodTransportista').val(),
+                                Filtro_CodDocumentoVentaDireccionTransportista: $('#MainContent_ddldireccionNuevaTransportista').val(),////
+                                Filtro_RucTransportista: $(Contenedor + 'txtNroRucTransportista').val(),
+                                Filtro_RazonSocialTransportista: $(Contenedor + 'txtTransportista').val(),          
+                                Filtro_PlacaTraslado:$(Contenedor + 'txtPlacaTraslado').val(),
+                                Filtro_MarcaVehiculo: $(Contenedor + 'txtMarcaGuia').val(),     
+                                Filtro_Licencia: $(Contenedor + 'txtLicenciaGuia').val(),
+                                Filtro_NroBultos: NroBultos,
+                              //  Filtro_Peso: Peso,
+                                Filtro_Peso: $(Contenedor + 'txtPeso').val() || 0,
+                                Filtro_CodUnidadPeso: $('#MainContent_ddlcodunidadpeso').val(),
+                                Filtro_Celular: Celular,
+                                Filtro_CodConductor: $('#hfCodConductor').val(),
+                                Filtro_ObservacionGuia: $('#MainContent_txtObservacionGuia').val()   
             
-            // FIN DATOS DE LA GUIA       
+                                // FIN DATOS DE LA GUIA       
 
 
                                       };
@@ -6694,8 +6703,24 @@ function F_GrabarDocumento(){
                             F_ActualizarCorreosCodDocumentoVenta(result.split('~')[2], $("#MainContent_ddlTipoDoc").val());
                         }
                         
-                    $('#MainContent_ddlMoneda').prop('disabled', false);
-                    F_Nuevo();                    
+                         if ($('#MainContent_chkWhatsApp').is(':checked')) 
+                            FlagWhatsApp=1
+
+                             $('#MainContent_ddlMoneda').prop('disabled', false);
+                             F_Nuevo();    
+
+                          if (FlagWhatsApp==1){  
+                        //  var habilitado = F_WhatsAppHabilitado(result.split('~')[2]);
+                          var habilitado = F_WhatsAppHabilitado()
+
+                        if (habilitado == "1"){
+                            F_EnviarWhatsApp_Por_Codigo(result.split('~')[2]);    
+                         }
+                             
+                       }  
+                    
+                    
+                                    
 //                    F_Pedidos();
                     }
                     else
@@ -7251,7 +7276,7 @@ function F_EditarRegistro(Fila) {
                                 title: "Edicion de Documento de Venta",
                                 title_html: true,
                                 height: 450,
-                                width: 970,
+                                width: 1070,
                                 autoOpen: false
                         });
 
@@ -13436,39 +13461,6 @@ function F_CambioTransportistaEdicion() {
     return false;
 }
 
-function F_ImprimirFacturaGrilla(Fila,Tipo) {
-        var imgID = Fila.id;
-        var lblCodigo = '';
-        var lblEstado = '';
-        var hfCodTipoDoc = '';
-        var CodMenu = 201;
-
-        if (Tipo == 'TK')
-        {
-           lblCodigo = '#' + imgID.replace('imgTCK', 'lblCodigo');     
-           lblEstado = '#' + imgID.replace('imgTCK', 'lblEstado');       
-           hfCodTipoDoc = '#' + imgID.replace('imgTCK', 'hfCodTipoDoc');   
-        }
-        else
-        {
-           lblCodigo = '#' + imgID.replace('imgPdf', 'lblCodigo');     
-           lblEstado = '#' + imgID.replace('imgPdf', 'lblEstado');    
-           hfCodTipoDoc = '#' + imgID.replace('imgPdf', 'hfCodTipoDoc');              
-        }
-
-        if ($(lblEstado).text()=='ANULADO')
-        {
-            alertify.log("La factura se encuentra anulada");
-            return false;
-        }
-
-        if ($(hfCodTipoDoc).val()==15)
-            CodMenu = 202;  
-            
-        F_ImprimirFactura($(lblCodigo).val(),CodMenu,Tipo);
-      
-        return false;
-}
 
 function F_ImprimirFactura(Codigo,CodMenu,Tipo) {    
         var rptURL = '';
@@ -13915,37 +13907,75 @@ function F_ImprimirFactura(Codigo,CodMenu) {
         return false;
 }
 
-function F_ImprimirFacturaGrilla(Fila,CodMenu) {
+
+
+function F_ImprimirFacturaGrilla(Fila,Tipo) {
         var imgID = Fila.id;
-        var Codigo = '';
-        var Estado = '';    
+        var lblCodigo = '';
+        var lblEstado = '';
+        var hfCodTipoDoc = '';
+        var CodMenu = 201;
 
-        if (CodMenu == 200)
+        if (Tipo == 'TK')
         {
-
-         if(($('#' + imgID.replace('imgImprimirGuia', 'hfCodTraslado')).val())==0){
-       alertify.log("No tiene guia adjunta");
-        return false;
-        }
-            Codigo = $('#' + imgID.replace('imgImprimirGuia', 'hfCodTraslado')).val() ; 
-            Estado = $('#' + imgID.replace('imgImprimirGuia', 'lblEstado')).val() ;    
+           lblCodigo = '#' + imgID.replace('imgTCK', 'lblCodigo');     
+           lblEstado = '#' + imgID.replace('imgTCK', 'lblEstado');       
+           hfCodTipoDoc = '#' + imgID.replace('imgTCK', 'hfCodTipoDoc');   
         }
         else
         {
-            Codigo = $('#' + imgID.replace('imgImprimirFactura', 'lblCodigo')).val() ; 
-            Estado = $('#' + imgID.replace('imgImprimirFactura', 'lblEstado')).val() ;       
-        }       
-     
-        if (Estado=='ANULADO')
+           lblCodigo = '#' + imgID.replace('imgPdf', 'lblCodigo');     
+           lblEstado = '#' + imgID.replace('imgPdf', 'lblEstado');    
+           hfCodTipoDoc = '#' + imgID.replace('imgPdf', 'hfCodTipoDoc');              
+        }
+
+        if ($(lblEstado).text()=='ANULADO')
         {
             alertify.log("La factura se encuentra anulada");
             return false;
         }
+
+        if ($(hfCodTipoDoc).val()==15)
+            CodMenu = 202;  
             
-        F_ImprimirFactura(Codigo,CodMenu);
+        F_ImprimirFactura($(lblCodigo).val(),CodMenu,Tipo);
       
         return false;
+
 }
+
+
+//function F_ImprimirFacturaGrilla(Fila,CodMenu) {
+//        var imgID = Fila.id;
+//        var Codigo = '';
+//        var Estado = '';    
+
+//        if (CodMenu == 200)
+//        {
+
+//         if(($('#' + imgID.replace('imgImprimirGuia', 'hfCodTraslado')).val())==0){
+//       alertify.log("No tiene guia adjunta");
+//        return false;
+//        }
+//            Codigo = $('#' + imgID.replace('imgImprimirGuia', 'hfCodTraslado')).val() ; 
+//            Estado = $('#' + imgID.replace('imgImprimirGuia', 'lblEstado')).val() ;    
+//        }
+//        else
+//        {
+//            Codigo = $('#' + imgID.replace('imgImprimirFactura', 'lblCodigo')).val() ; 
+//            Estado = $('#' + imgID.replace('imgImprimirFactura', 'lblEstado')).val() ;       
+//        }       
+//     
+//        if (Estado=='ANULADO')
+//        {
+//            alertify.log("La factura se encuentra anulada");
+//            return false;
+//        }
+//            
+//        F_ImprimirFactura(Codigo,CodMenu);
+//      
+//        return false;
+//}
 
 
 function F_FacturaGuia() {

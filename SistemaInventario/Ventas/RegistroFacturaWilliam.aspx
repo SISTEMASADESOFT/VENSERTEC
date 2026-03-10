@@ -391,6 +391,23 @@
                                                 Font-Bold="True"></asp:TextBox>
                                         </td>
 
+
+
+                                                  <td style="font-weight: bold">
+                                                        Celular
+                                                    </td>
+                                                    <td>
+                                                        <asp:TextBox ID="txtCelular" CssClass="Derecha" runat="server" Width="80px"
+                                                            Font-Names="Arial" ForeColor="Blue" Font-Bold="True" MaxLength="9"></asp:TextBox>
+                                                    </td>
+
+                                                    <td style="font-weight: bold;">
+                                                        <asp:CheckBox ID="chkWhatsApp" runat="server" Text="Enviar Por Whatsap" Font-Bold="True" />
+                                                    </td>
+                                             
+
+
+
                                                     </tr>
                                     
                         </table>
@@ -2752,7 +2769,7 @@
                                                 <td style="font-weight: bold; padding-left: 5px;color: #FF0000; font-size: small;">
                                                     Destino
                                                 </td>
-                                                <td style="padding-left: 10px;">
+                                                <td style="padding-left: 13px;">
                                   
                                          <div id="Div_DireccionDestinoEdicion">
                                                             <asp:DropDownList ID="ddldireccionNuevaDestinoEdicion" runat="server" Font-Names="Arial" ForeColor="Red"
@@ -2839,7 +2856,7 @@
                                                                     Font-Bold="True" onblur="F_ValidaRucDniConductorEdicion(); return false;"></asp:TextBox>
                                                             </td>
                                              <td>
-                                                                <asp:TextBox ID="txtConductorRazonSocialEdicion" runat="server" Width="311px" Font-Names="Arial"
+                                                                <asp:TextBox ID="txtConductorRazonSocialEdicion" runat="server" Width="271px" Font-Names="Arial"
                                                                     ForeColor="Blue" Font-Bold="True" placeholder="NOMBRE CONDUCTOR"></asp:TextBox>
                                                             </td>
                                              <td style="font-weight: bold;padding-left: 4px;">
@@ -2878,7 +2895,7 @@
                                                     Marca
                                                 </td>
                                                  <td>
-                                                     <asp:TextBox ID="txtMarcaGuiaEdicion" runat="server" Width="105" Font-Names="Arial" ForeColor="Blue"
+                                                     <asp:TextBox ID="txtMarcaGuiaEdicion" runat="server" Width="101" Font-Names="Arial" ForeColor="Blue"
                                                                     Font-Bold="True"></asp:TextBox>
                                                 </td>
                                                  <td style="font-weight: bold">
@@ -2900,7 +2917,7 @@
                                                 <table  cellpadding="0" cellspacing="0">
                                                 <tr>
                                                 <td>
-                                                                <asp:TextBox ID="txtObservacionGuiaEdicion" runat="server" Width="745" Font-Names="Arial" ForeColor="Blue"
+                                                                <asp:TextBox ID="txtObservacionGuiaEdicion" runat="server" Width="809" Font-Names="Arial" ForeColor="Blue"
                                                                     Font-Bold="True" ></asp:TextBox>
                                                             </td>
                                                 <td style="display:none">     

@@ -991,6 +991,84 @@ ddldireccionDestino, FlagTraslado, NroRuc, RazonSocial) {
     }
 }
 
+function F_WhatsAppHabilitado() {
+    var resultado = "0";
+
+    $.ajax({
+        type: "POST",
+        url: "../Servicios/Servicios.asmx/F_WhatsAppHabilitado",
+        data: "{}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,
+        success: function (response) {
+            resultado = response.d;
+        }
+    });
+
+    return resultado;
+}
+
+
+
+function F_EnviarWhatsApp_Por_Codigo(Codigo) {
+    $.ajax({
+        type: "POST",
+        url: "../Servicios/Servicios.asmx/EnviarFacturaWhatsAppDesdeGrilla",
+        data: "{'codDocumentoVenta':'" + Codigo + "'}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            alertify.success("Factura enviada por WhatsApp");
+        },
+        error: function (xhr, status, error) {
+
+            try {
+                var json = JSON.parse(xhr.responseText);
+                if (json && json.Message) {
+                    alertify.error(json.Message);
+                } else {
+                    alertify.error("Error al enviar WhatsApp.");
+                }
+            } catch (e) {
+
+                if (xhr.responseText.includes("CELULAR")) {
+                    alertify.error("EL CLIENTE NO TIENE NÚMERO DE CELULAR REGISTRADO");
+                } else {
+                    alertify.error("Error al enviar WhatsApp.");
+                }
+            }
+        }
+    });
+}
+
+
+
+function F_EnviarWhatsApp(Fila) {
+    var imgID = Fila.id;
+    var Codigo = $('#' + imgID.replace('imgMandarWhatsApp', 'lblCodigo')).val();
+    var Estado = $('#' + imgID.replace('imgMandarWhatsApp', 'lblEstado')).val();
+
+    MostrarEspera(true);
+
+    if (Estado == 'ANULADO') {
+        alertify.log("La factura está anulada");
+        MostrarEspera(false);
+        return false;
+    }
+
+
+    //     var habilitado = F_WhatsAppHabilitado(Codigo)
+
+    //     if(habilitado == "1"){
+    F_EnviarWhatsApp_Por_Codigo(Codigo);
+    //      } else{
+    //      alertify.log("Falta Configurar");
+    //     }
+    MostrarEspera(false);
+    return false;
+}
+
 function F_EliminarDireccion(CodDocumentoVenta, CodDocumentoVentaDireccion, ddldireccion, txtDistrito) {
 
     try {

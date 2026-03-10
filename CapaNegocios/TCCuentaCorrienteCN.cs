@@ -663,5 +663,53 @@ namespace CapaNegocios
             }
 
         }
+
+        public DataTable ObtenerCredencialesWhatsApp(int codAlmacen)
+        {
+            try
+            {
+
+                return obj.ObtenerCredencialesWhatsApp(codAlmacen);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public void RegistrarMensajeWhatsApp(int codUsuario, int codDocumentoVenta, int codCategoria, string observacion, int codAlmacen)
+        {
+            try
+            {
+
+                obj.RegistrarMensajeWhatsApp(codUsuario, codDocumentoVenta, codCategoria, observacion, codAlmacen);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public DataTable ValidarCredencialesWhatsAppBasico(int CodEmpresa, int CodAlmacen)
+        {
+
+
+            try
+            {
+
+                return obj.ValidarCredencialesWhatsAppBasico(CodEmpresa, CodAlmacen);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
     }
 }

@@ -2905,6 +2905,7 @@ namespace SistemaInventario.Ventas
             objEntidad.Codtipodoctemporal = Convert.ToInt32(objTablaFiltro["Filtro_Codtipodoctemporal"]);
 
             objEntidad.Requerimiento = Convert.ToString(objTablaFiltro["Filtro_Requerimiento"]);
+            objEntidad.Celular = Convert.ToString(objTablaFiltro["Filtro_Celular"]);
             objEntidad.CodDocumentoVentaDireccion = Convert.ToInt32(objTablaFiltro["Filtro_CodDocumentoVentaDireccion"]);
 
             /////transportista
@@ -2916,9 +2917,9 @@ namespace SistemaInventario.Ventas
             //objEntidad.NumeroGuia = Convert.ToString(objTablaFiltro["Filtro_NumeroGuia"]);
             //objEntidad.FechaTraslado = Convert.ToDateTime(objTablaFiltro["Filtro_FechaTraslado"]);
             //objEntidad.Transportista = Convert.ToString(objTablaFiltro["Filtro_Transportista"]);
-            //objEntidad.Marca = Convert.ToString(objTablaFiltro["Filtro_Marca"]);
-            //objEntidad.Licencia = Convert.ToString(objTablaFiltro["Filtro_Licencia"]);
-            //objEntidad.NuBultos = Convert.ToString(objTablaFiltro["Filtro_NuBultos"]);
+            objEntidad.Marca = Convert.ToString(objTablaFiltro["Filtro_Marca"]);
+            objEntidad.Licencia = Convert.ToString(objTablaFiltro["Filtro_Licencia"]);
+            objEntidad.NuBultos = Convert.ToString(objTablaFiltro["Filtro_NuBultos"]);
             //objEntidad.Peso = Convert.ToString(objTablaFiltro["Filtro_Peso"]);
             //objEntidad.CodTransportista = Convert.ToInt32(objTablaFiltro["Filtro_CodTransportista"]);
             //objEntidad.CodDireccionTransportista = Convert.ToInt32(objTablaFiltro["Filtro_CodDireccionTransportista"]);
@@ -2934,7 +2935,7 @@ namespace SistemaInventario.Ventas
             //objEntidad.CodUnidadPeso = Convert.ToInt32(objTablaFiltro["Filtro_codunidadpeso"]);
 
             // INICIO DATOS DE LA GUIA
-
+            objEntidad.Transportista = Convert.ToString(objTablaFiltro["Filtro_Transportista"]);
             objEntidad.FlagGuia = Convert.ToInt32(objTablaFiltro["Filtro_FlagGuia"]);
             objEntidad.SerieGuia = Convert.ToString(objTablaFiltro["Filtro_SerieGuia"]);
             objEntidad.NumeroGuia = Convert.ToString(objTablaFiltro["Filtro_NumeroGuia"]);

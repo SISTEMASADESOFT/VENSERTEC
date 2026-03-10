@@ -1827,5 +1827,109 @@ namespace CapaDatos
             finally { dta_consulta.Dispose(); }
         }
 
+
+        public DataTable ObtenerCredencialesWhatsApp(int CodAlmacen)
+        {
+
+            DataTable dta_consulta = null;
+
+            try
+            {
+
+                using (SqlConnection sql_conexion = new SqlConnection())
+                {
+                    
+                    sql_conexion.ConnectionString = ConfigurationManager.ConnectionStrings["BDVENSERTEC_PRUEBAS"].ConnectionString;
+                    sql_conexion.Open();
+
+                    using (SqlCommand sql_comando = new SqlCommand())
+                    {
+
+                        sql_comando.Connection = sql_conexion;
+                        sql_comando.CommandType = CommandType.StoredProcedure;
+                        sql_comando.CommandText = "PA_ObtenerCredencialesWhatsApp";
+
+                        sql_comando.Parameters.Add("@CodAlmacen", SqlDbType.Int).Value = CodAlmacen;
+
+
+                        dta_consulta = new DataTable();
+
+                        dta_consulta.Load(sql_comando.ExecuteReader());
+
+                        return dta_consulta;
+
+                    }
+
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+
+            }
+            finally { dta_consulta.Dispose(); }
+        }
+
+        public void RegistrarMensajeWhatsApp(int codUsuario, int codDocumentoVenta, int codCategoria, string observacion, int codAlmacen)
+        {
+            try
+            {
+                using (SqlConnection sql_conexion = new SqlConnection(ConfigurationManager.ConnectionStrings["BDVENSERTEC_PRUEBAS"].ConnectionString))
+                {
+                    sql_conexion.Open();
+
+                    using (SqlCommand sql_comando = new SqlCommand("PA_REGISTRAR_MENSAJES_WHATSAP", sql_conexion))
+                    {
+
+                        sql_comando.CommandType = CommandType.StoredProcedure;
+
+                        sql_comando.Parameters.Add("@CodUsuario", SqlDbType.Int).Value = codUsuario;
+                        sql_comando.Parameters.Add("@CodDocumentoVenta", SqlDbType.Int).Value = codDocumentoVenta;
+                        sql_comando.Parameters.Add("@CodCategoria", SqlDbType.Int).Value = codCategoria;
+                        sql_comando.Parameters.Add("@Observacion", SqlDbType.VarChar, 200).Value = observacion;
+                        sql_comando.Parameters.Add("@CodAlmacen", SqlDbType.Int).Value = codAlmacen;
+
+                        sql_comando.ExecuteNonQuery();
+
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+
+        public DataTable ValidarCredencialesWhatsAppBasico(int CodEmpresa, int CodAlmacen)
+        {
+            DataTable dta_consulta = new DataTable();
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["BDVENSERTEC_PRUEBAS"].ConnectionString))
+                {
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("PA_ValidarCredencialesWhatsAppBasico", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@CodEmpresa", SqlDbType.Int).Value = CodEmpresa;
+                        cmd.Parameters.Add("@CodAlmacen", SqlDbType.Int).Value = CodAlmacen;
+
+                        dta_consulta.Load(cmd.ExecuteReader());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return dta_consulta;
+        }
     }
 }
