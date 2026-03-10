@@ -1,7 +1,7 @@
 ﻿var AppSession = "../Ventas/RegistroFacturaWilliam.aspx";
 var CodigoMenu = 4000; var CodigoInterno = 2;
 var Codtipodoc=1
-
+//
 var Ubigeo = 0;
 var CodDirecionDestinoEdicion = 0;
 var CodDirecionTransportistaEdicion = 0;
